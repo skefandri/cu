@@ -468,9 +468,9 @@ int key_hook(int keycode, void *param)
     if (keycode == 53) // ESC key to exit
         exit(0);
     if (keycode == 13) // W key to move forward
-        move_player(&data->player, &data->map, -1, 0);
-    if (keycode == 1) // S key to move backward
         move_player(&data->player, &data->map, 1, 0);
+    if (keycode == 1) // S key to move backward
+        move_player(&data->player, &data->map, -1, 0);
     if (keycode == 0) // A key to move left
         move_player(&data->player, &data->map, 0, -1);
     if (keycode == 2) // D key to move right

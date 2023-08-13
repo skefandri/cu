@@ -6,6 +6,7 @@ SRC_MAN = cub3d.c  ./utils/ft_atoi.c ./utils/ft_split.c ./utils/ft_strdup.c ./ut
 
 CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g3  -lmlx -framework OpenGL -framework AppKit
 
+CFLAS = cc tt.c -Wall -Wextra -Werror -fsanitize=address -g3  -lmlx -framework OpenGL -framework AppKit
 all : $(NAME)
 $(NAME) : $(SRC_MAN)
 		cc  $(CFLAGS) $(SRC_MAN) -o $(NAME)
