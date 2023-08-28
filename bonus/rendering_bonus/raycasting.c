@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachaab <yachaab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ysabr <ysabr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 17:41:56 by ysabr             #+#    #+#             */
-/*   Updated: 2023/08/28 21:52:54 by yachaab          ###   ########.fr       */
+/*   Updated: 2023/08/28 22:07:29 by ysabr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	find_vertical_intersection(t_config *config, t_ray ray, double angle, t_int
 		if (xinter < 0 || yinter < 0 || xinter >= config->map.col_len * CELL_SIZE
 			|| yinter >= config->map.row_len * CELL_SIZE)
 			break ;
+		
 		if (config->map.map[(int)yinter/ CELL_SIZE][(int)xinter / CELL_SIZE] == '1')
 			break;
 		if (stepx < 0 && xinter >= CELL_SIZE && config->map.map[(int)yinter / CELL_SIZE][(int)xinter / CELL_SIZE - 1] == '1')
@@ -119,7 +120,9 @@ void	find_vertical_intersection(t_config *config, t_ray ray, double angle, t_int
 void cast_ray(t_config *config, t_player *player, double angle, double t)
 {
 	t_ray ray;
-	t_intersection horizontal, vertical;
+	t_intersection horizontal;
+	t_set_tex tex_values;
+	t_intersection vertical;
 
 	angle = remainder(angle, M_PI * 2);
 	if (angle < 0)
@@ -131,7 +134,6 @@ void cast_ray(t_config *config, t_player *player, double angle, double t)
 	find_vertical_intersection(config, ray, angle, &vertical);
 	horizontal.distance *= cos(t);
 	vertical.distance *= cos(t);
-	t_set_tex tex_values;
 	if (horizontal.distance < vertical.distance)
 	{
 		tex_values.x = horizontal.x;
@@ -150,9 +152,9 @@ void cast_ray(t_config *config, t_player *player, double angle, double t)
 		tex_values.high = get_hight(vertical.distance);
 		tex_values.from = (HIGHT / 2) - tex_values.high / 2;
 		if (cos(angle) > 0)
-			tex_values.current_texture = &config->wt; // West
+			tex_values.current_texture = &config->et; // West
 		else
-			tex_values.current_texture = &config->et; // East
+			tex_values.current_texture = &config->wt; // East
 	}
 	draw_wall(config, &tex_values);
 	config->j++;

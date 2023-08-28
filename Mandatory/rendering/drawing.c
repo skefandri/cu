@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachaab <yachaab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ysabr <ysabr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 16:21:37 by ysabr             #+#    #+#             */
-/*   Updated: 2023/08/28 21:45:25 by yachaab          ###   ########.fr       */
+/*   Updated: 2023/08/28 22:30:35 by ysabr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,44 @@ void render_rays(t_config *config, t_player *player)
 		cast_ray(config, player, ray_angle, (FOV / 2) - ((FOV / 1000) * i));
 		i++;
 	}
+}
+# define WIDTH_MINIMAP 200
+# define HIGH_MINIMAP 200
+
+void	draw_minimap(t_config *config)
+{
+	int	x;
+	int	y;
+	int	color;
+	t_player mini_player;
+	y = 0;
+	int	px = config->player.x - WIDTH_MINIMAP /2;
+	int	py = config->player.y - HIGH_MINIMAP /2;
+	while (y <  HIGH_MINIMAP)
+	{
+		x = 0;
+		px = config->player.x - WIDTH_MINIMAP /2;
+		while (x < WIDTH_MINIMAP)
+		{			
+			color = COLOR_GREEN;
+			if (py < 0 || px < 0)
+				color = COLOR_BLACK;
+			else if (px / CELL_SIZE >= config->map.col_len)
+				color = COLOR_BLACK;
+			else if (py / CELL_SIZE > config->map.row_len)
+				color = COLOR_BLACK;
+			else if (config->map.map[py / CELL_SIZE][px / CELL_SIZE] == '1')
+				color = COLOR_WHITE;
+			else if (config->map.map[py / CELL_SIZE][px / CELL_SIZE] != '0')
+				color = COLOR_BLACK;
+			my_mlx_pixel_put(config, x, y, color);
+			x++;
+			px++;
+		}
+		y++;
+		py++;
+	}
+    mini_player.x = WIDTH_MINIMAP / 2;
+    mini_player.y = HIGH_MINIMAP / 2;
+    draw_player(config, &mini_player);
 }

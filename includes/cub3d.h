@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yachaab <yachaab@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ysabr <ysabr@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 13:25:41 by ysabr             #+#    #+#             */
-/*   Updated: 2023/08/28 15:33:42 by yachaab          ###   ########.fr       */
+/*   Updated: 2023/08/28 22:16:24 by ysabr            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define PLAYER_SIZE 10
 # define FOV 1.0471975511965976
 # define TURN_ANGLE 0.05235987755982988
+#define MOUSE_SPEED 0.05
 
 // !--------------- PARSING -----------------! //
 typedef struct s_texture
@@ -93,6 +94,7 @@ typedef struct s_config
 	int			nbr_instru;
 	int			floor_color[3];
 	int			ceiling_color[3];
+	int			last_mouse_x;
 }	t_config;
 
 // *-------------- UTILS -------------* //
@@ -136,6 +138,14 @@ typedef struct s_intersection {
 	double	distance;
 	int		hit;
 }	t_intersection;
+enum Colors
+{
+    COLOR_BLACK = 0,
+    COLOR_WHITE = 0xFFFFFF,
+    COLOR_RED = 0xFF0000,
+    COLOR_GREEN = 0x00FF00,
+    COLOR_BLUE = 0x0000FF
+};
 
 typedef struct s_set_tex
 {
@@ -181,4 +191,6 @@ bool		is_valid_position(t_map *map, int x, int y);
 void		rotate_player(t_player *player, double angle);
 void		init_ray(t_ray *ray, t_player *player, double angle);
 void		move_player(t_player *player, t_map *map, double direction);
+int mouse_move(int x, int y, void *param);
+void    draw_minimap(t_config *config);
 #endif
